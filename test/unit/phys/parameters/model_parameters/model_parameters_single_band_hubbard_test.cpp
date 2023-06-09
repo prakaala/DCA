@@ -42,7 +42,7 @@ TEST(ModelParametersSingleBandHubbardTest, ReadAll) {
 
   EXPECT_EQ(1., pars.get_t());
   EXPECT_EQ(0.5, pars.get_t_prime());
-  EXPECT_EQ(8., pars.get_U());
+  EXPECT_EQ(9., pars.get_U());
   EXPECT_EQ(2., pars.get_V());
   EXPECT_EQ(2., pars.get_V_prime());
 }

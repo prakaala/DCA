@@ -59,12 +59,28 @@ public:
     V_prime_ = V_prime;
   }
 
+  void getUs(){
+    double start = getter_[0];
+    double end = getter_[1];
+    int steps = getter_[2];
+    double x;
+    for(int i = 1; i< steps; i++){
+       x = start + i*(end-start)/steps;
+      set_U(x);
+
+    }
+  }
+
+
+
 private:
   double t_;
   double t_prime_;
+  std::array<int, 3> getter_;
   double U_;
   double V_;
   double V_prime_;
+ 
 };
 
 template <typename Lattice>
@@ -127,7 +143,8 @@ void ModelParameters<models::TightBindingModel<Lattice>>::readWrite(ReaderOrWrit
   catch (const std::exception& r_e) {
   }
   try {
-    reader_or_writer.execute("U", U_);
+    reader_or_writer.execute("U", getter_);
+    getUs();
   }
   catch (const std::exception& r_e) {
   }

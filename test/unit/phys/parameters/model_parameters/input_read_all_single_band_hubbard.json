@@ -2,7 +2,7 @@
     "single-band-Hubbard-model": {
         "t": 1.,
         "t-prime": 0.5,
-        "U": 8.,
+        "U": [1,10,10000],
         "V": 2.,
         "V-prime": 2.
     }
