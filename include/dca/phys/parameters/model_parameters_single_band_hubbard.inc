@@ -9,8 +9,12 @@
 //
 // Template specialization of model parameters for the single-band Hubbard model.
 
+
+#include "GridGenerator1D.hpp"
+
 template <typename Lattice>
 class ModelParameters<models::TightBindingModel<Lattice>> {
+
 public:
   ModelParameters() : t_(0.), t_prime_(0.), U_(0.), V_(0.), V_prime_(0.) {}
 
@@ -58,28 +62,39 @@ public:
   void set_V_prime(const double V_prime) {
     V_prime_ = V_prime;
   }
+ 
 
-  void getUs(){
-    double start = getter_[0];
-    double end = getter_[1];
-    int steps = getter_[2];
-    double x;
-    for(int i = 1; i< steps; i++){
-       x = start + i*(end-start)/steps;
-      set_U(x);
-
-    }
-  }
+  // void generate(const struct ParamGrid inputObject) {
+  //   Generator<double> generator([](){
+  //     return 0.0;
+  //   });
+  //   for(double value: generator.makeIterator(inputObject.start, inputObject.end , inputObject.step)){
+  //     set_U(value);
+  //     return;
+  //   }
+  // }
+  
+  
+  
+  // void getUs(){
+  //   double x;
+  //   for(int i = 1; i< steps; i++){
+  //      x = start + i*(end-start)/steps;
+  //     set_U(x);
+  //   }
+  // }
 
 
 
 private:
   double t_;
   double t_prime_;
-  std::array<int, 3> getter_;
   double U_;
   double V_;
   double V_prime_;
+  std::optional<GridGenerator1D> u_generator_;
+  u_generator_.emplace(u_grid_);
+
  
 };
 
@@ -143,8 +158,15 @@ void ModelParameters<models::TightBindingModel<Lattice>>::readWrite(ReaderOrWrit
   catch (const std::exception& r_e) {
   }
   try {
-    reader_or_writer.execute("U", getter_);
-    getUs();
+    std::array<double, 3> u_input;
+    reader_or_writer.execute("U", u_input);
+    if(u_input[2] != 0){
+      GridGenerator1D::GridGenerator1D() =GridGenerator1D::u_grid_({u_input[0], u_input[1], int(u_input[2])});
+      //GridGenerator1D::GridGenerator1D grid(u_grid_);
+            //set_U(u_grid_.start);
+    }
+
+   
   }
   catch (const std::exception& r_e) {
   }
