@@ -16,9 +16,9 @@ namespace dca{
 class GridGenerator1D{
     public:
         GridGenerator1D(struct ParamGrid pGrid): paramGrid_(pGrid){
-            for(int i = 0; i < pGrid.step; i++){
+             for(int i = 0; i < pGrid.step; i++){
                 grid_of_U.push_back(pGrid.start + (pGrid.end-pGrid.start)*i/pGrid.step);
-            }
+            } 
         };
         bool next(double& value) const;
         double getCurrent() const;
@@ -30,6 +30,8 @@ class GridGenerator1D{
         double current_;
         std::vector<double> grid_of_U;
 };
+
+
 
 
 //check whether there exists new value. 
@@ -47,7 +49,7 @@ bool GridGenerator1D::next(double& value) const{
 
 //gets the current value that the iterator points to in the grid, and updates the iterator
 double GridGenerator1D::getCurrent() const{
-   std::vector<double>::iterator it = grid_of_U.begin();   
+   auto it = grid_of_U.begin();   
      //what happens after array is ended?some garbabe value resides within the pointer
     if(it != grid_of_U.end()){
        return *it;

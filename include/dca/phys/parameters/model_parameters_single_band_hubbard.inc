@@ -12,6 +12,8 @@
 
 #include "GridGenerator1D.hpp"
 
+
+
 template <typename Lattice>
 class ModelParameters<models::TightBindingModel<Lattice>> {
 
@@ -160,8 +162,10 @@ void ModelParameters<models::TightBindingModel<Lattice>>::readWrite(ReaderOrWrit
   try {
     std::array<double, 3> u_input;
     reader_or_writer.execute("U", u_input);
-    if(u_input[2] != 0){
-      GridGenerator1D::GridGenerator1D() =GridGenerator1D::u_grid_({u_input[0], u_input[1], int(u_input[2])});
+    if(u_input[2] != 0){ 
+      dca::phys::params::ParamGrid u_grid_;
+      u_grid_ = {u_input[0], u_input[1], int(u_input[2])};
+      dca::phys::params::GridGenerator1D::GridGenerator1D name(u_grid_);
       //GridGenerator1D::GridGenerator1D grid(u_grid_);
             //set_U(u_grid_.start);
     }

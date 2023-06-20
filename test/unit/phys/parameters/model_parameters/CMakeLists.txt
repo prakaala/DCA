@@ -20,7 +20,7 @@ dca_add_gtest(model_parameters_single_band_hubbard_test
   GTEST_MAIN
   LIBS function_transform json)
 
-  dca_add_gtest(grid_generator_1d_tst
+  dca_add_gtest(grid_generator_1d_test
   GTEST_MAIN
   LIBS function_transform json)
   
