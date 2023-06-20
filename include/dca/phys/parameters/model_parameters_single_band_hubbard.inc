@@ -95,9 +95,6 @@ private:
   double V_;
   double V_prime_;
   std::optional<GridGenerator1D> u_generator_;
-  u_generator_.emplace(u_grid_);
-
- 
 };
 
 template <typename Lattice>
@@ -163,9 +160,8 @@ void ModelParameters<models::TightBindingModel<Lattice>>::readWrite(ReaderOrWrit
     std::array<double, 3> u_input;
     reader_or_writer.execute("U", u_input);
     if(u_input[2] != 0){ 
-      dca::phys::params::ParamGrid u_grid_;
-      u_grid_ = {u_input[0], u_input[1], int(u_input[2])};
-      dca::phys::params::GridGenerator1D::GridGenerator1D name(u_grid_);
+      dca::phys::params::ParamGrid u_grid{u_input[0], u_input[1], int(u_input[2])};
+      u_generator_ = std::make_optional(u_grid);
       //GridGenerator1D::GridGenerator1D grid(u_grid_);
             //set_U(u_grid_.start);
     }
