@@ -94,7 +94,7 @@ private:
   double U_;
   double V_;
   double V_prime_;
-  std::optional<GridGenerator1D> u_generator_;
+  std::optional<dca::phys::params::GridGenerator1D> u_generator_;
 };
 
 template <typename Lattice>
