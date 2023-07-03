@@ -10,10 +10,6 @@
 // Template specialization of model parameters for the single-band Hubbard model.
 
 
-#include "GridGenerator1D.hpp"
-
-
-
 template <typename Lattice>
 class ModelParameters<models::TightBindingModel<Lattice>> {
 
@@ -161,7 +157,7 @@ void ModelParameters<models::TightBindingModel<Lattice>>::readWrite(ReaderOrWrit
     reader_or_writer.execute("U", u_input);
     if(u_input[2] != 0){ 
       dca::phys::params::ParamGrid u_grid{u_input[0], u_input[1], int(u_input[2])};
-      u_generator_ = std::make_optional(u_grid);
+      u_generator_ = std::optional<GridGenerator1D>(std::in_place, u_grid);
       //GridGenerator1D::GridGenerator1D grid(u_grid_);
             //set_U(u_grid_.start);
     }
