@@ -4,8 +4,8 @@
 
 
 namespace dca{
-    namespace phys{
-        namespace params{
+namespace phys{
+namespace params{
 
 
   struct ParamGrid{
@@ -16,7 +16,7 @@ namespace dca{
 
 class GridGenerator1D{
     public:
-        GridGenerator1D(struct ParamGrid pGrid): paramGrid_(pGrid){
+        GridGenerator1D(struct ParamGrid pGrid) noexcept: paramGrid_(pGrid){
              for(int i = 0; i < pGrid.step; i++){
                 grid_of_U.push_back(pGrid.start + (pGrid.end-pGrid.start)*i/pGrid.step);
             }
@@ -57,9 +57,6 @@ double GridGenerator1D::getCurrent() const{
 //     return grid_of_U;
 // }
 
-
-
-
-        }
-    }
+}
+}
 }

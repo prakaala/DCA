@@ -33,6 +33,9 @@
 #include "dca/phys/models/analytic_hamiltonians/Kagome_hubbard.hpp"
 #include "dca/phys/models/tight_binding_model.hpp"
 
+// Used by model_parameters_single_band_hubbard.inc
+#include "GridGenerator1D.hpp"
+
 namespace dca {
 namespace phys {
 namespace params {
