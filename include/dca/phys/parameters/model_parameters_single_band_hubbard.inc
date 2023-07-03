@@ -91,6 +91,7 @@ private:
   double V_;
   double V_prime_;
   std::optional<dca::phys::params::GridGenerator1D> u_generator_;
+  std::vector<double> u_input_; // we need to retain this so it can be written back to output
 };
 
 template <typename Lattice>
@@ -152,20 +153,26 @@ void ModelParameters<models::TightBindingModel<Lattice>>::readWrite(ReaderOrWrit
   }
   catch (const std::exception& r_e) {
   }
+  bool fail = false;
   try {
-    std::array<double, 3> u_input;
-    reader_or_writer.execute("U", u_input);
-    if(u_input[2] != 0){ 
-      dca::phys::params::ParamGrid u_grid{u_input[0], u_input[1], int(u_input[2])};
+    reader_or_writer.execute("U", u_input_);
+    if(u_input_.size() == 3){ 
+      dca::phys::params::ParamGrid u_grid{u_input_[0], u_input_[1], int(u_input_[2])};
       u_generator_ = std::optional<GridGenerator1D>(std::in_place, u_grid);
-      //GridGenerator1D::GridGenerator1D grid(u_grid_);
-            //set_U(u_grid_.start);
     }
-
-   
+    else if(u_input_.size() == 1)
+      U_ = u_input_[0];
+    else if(u_input_.size() != 0)
+      fail = true;    
+    //GridGenerator1D::GridGenerator1D grid(u_grid_);
+            //set_U(u_grid_.start);    
   }
   catch (const std::exception& r_e) {
   }
+  // This is a nice example of why this way of dealing with the input io is a mess
+  // \todo fix this as there is no good way to report bad input
+  if (fail)
+    throw std::runtime_error("Only 1 or 3 values of U are valid inputs!");
   try {
     reader_or_writer.execute("V", V_);
   }
